@@ -61,9 +61,8 @@ for t in {0..255}; do ./target/release/w2t input.jpg threshold_${t}.png -t $t; d
 
 ```sh
 cd web
-wasm-pack build --release --target web
-# または
-# trunk serve
+cargo watch -s 'wasm-pack build --target web --out-dir pkg'
+python3 -m http.server 8000
 ```
 
 `index.html`をブラウザで開くとGUIで画像変換が可能です。
