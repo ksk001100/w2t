@@ -1,10 +1,9 @@
-[package]
-name = "w2t"
-version = "0.1.0"
-edition = "2024"
-description = "A tool for converting images to transparent PNGs"
-authors = ["ksk001100 <hm.pudding0715@gmail.com>"]
+[workspace]
+members = ["cli", "web", "core"]
+resolver = "2"
 
-[dependencies]
-image = "0.25.6"
-seahorse = "2.2.0"
+[workspace.dependencies]
+image = "0.24"
+seahorse = "2.2"
+wasm-bindgen = "0.2"
+console_error_panic_hook = "0.1"

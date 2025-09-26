@@ -1,45 +1,82 @@
-# w2t
-
 w2t is a command-line tool that converts white (or bright) areas in an image to transparent, saving the result as a PNG with transparency.
 
-## Features
+# w2t
 
-- Automatically makes white areas of the input image transparent
-- Adjustable threshold for transparency (default: 240)
-- Simple CLI interface
+**w2t**は、画像の白（または明るい）部分を透過PNGに変換するツールです。Rust製のモノレポ構成で、CLIツール・Webアプリ・コアライブラリを含みます。
 
-## Installation
+## プロジェクト構成
 
-Make sure you have Rust installed, then build with:
+
+
+## CLIツール
+
+### インストール
+
+Cargo（Rust公式パッケージマネージャ）がインストールされていれば、以下のコマンドでCLIツールをインストールできます。
 
 ```sh
+cargo install --path cli
+```
+
+インストール後、`w2t`コマンドが利用可能になります。
+
+### ビルド
+
+Rustがインストールされている環境で、`cli/`ディレクトリに移動しビルドします。
+
+```sh
+cd cli
 cargo build --release
 ```
 
-## Usage
+### 使い方
 
 ```sh
-w2t <input_path> <output_path> [--threshold <value>]
+./target/release/w2t <input_path> <output_path> [--threshold <value>]
 ```
 
-- `<input_path>`: Path to the input image file
-- `<output_path>`: Path to the output PNG file
-- `--threshold`, `-t`, `-th`: Threshold for transparency (0–255, default: 240)
+- `<input_path>`: 入力画像ファイルのパス
+- `<output_path>`: 出力PNGファイルのパス
+- `--threshold`, `-t`, `-th`: 透過の閾値（0–255, デフォルト: 240）
 
-### Example
+#### 例
 
 ```sh
-w2t input.jpg output.png --threshold 250
+./target/release/w2t input.jpg output.png --threshold 250
 ```
-In this example, pixels with RGB values greater than or equal to 250 will become transparent.
+この例では、RGB値が250以上のピクセルが透過されます。
 
 ```sh
-for t in {0..255}; do w2t input.jpg threshold_${t}.png -t $t; done
+for t in {0..255}; do ./target/release/w2t input.jpg threshold_${t}.png -t $t; done
 ```
-This command will create 256 PNG files with different transparency thresholds, ranging from 0 to 255.
+このコマンドで、閾値0〜255の256通りの透過PNGを一括生成できます。
 
+---
 
-## License
+## Webアプリ
+
+`web/`配下にWeb版（WASM + JS）があり、ローカルでビルド・動作確認できます。
+
+### ビルド例
+
+```sh
+cd web
+wasm-pack build --release --target web
+# または
+# trunk serve
+```
+
+`index.html`をブラウザで開くとGUIで画像変換が可能です。
+
+---
+
+## コアライブラリ
+
+`core/`配下に画像処理ロジックが実装されており、CLI・Web両方から利用されています。
+
+---
+
+## ライセンス
 
 MIT
 

@@ -1,0 +1,14 @@
+[package]
+name = "w2t"
+version = "0.1.0"
+edition = "2021"
+description = "A tool for converting images to transparent PNGs"
+authors = ["Keisuke Toyota <hm.pudding0715@gmail.com>"]
+
+[[bin]]
+name = "w2t"
+path = "src/main.rs"
+
+[dependencies]
+w2t-core = { path = "../core" }
+seahorse.workspace = true

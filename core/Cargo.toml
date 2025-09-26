@@ -1,0 +1,9 @@
+[package]
+name = "w2t-core"
+version = "0.1.0"
+edition = "2021"
+description = "Core image processing logic for w2t"
+authors = ["Keisuke Toyota <hm.pudding0715@gmail.com>"]
+
+[dependencies]
+image.workspace = true

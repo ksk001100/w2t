@@ -1,0 +1,42 @@
+name: Deploy Web App to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+    paths: ['web/**', 'core/**']
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: wasm32-unknown-unknown
+        override: true
+    
+    - name: Install wasm-pack
+      run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+    
+    - name: Build WebAssembly
+      run: |
+        cd web
+        wasm-pack build --target web --out-dir pkg
+    
+    - name: Create dist directory
+      run: |
+        mkdir -p dist
+        cp web/index.html dist/
+        cp -r web/pkg dist/
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
